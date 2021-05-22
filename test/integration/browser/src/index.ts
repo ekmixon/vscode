@@ -72,6 +72,13 @@ async function runTestsInBrowser(browserType: BrowserType, endpoint: url.UrlWith
 			process.exit(msgText === 'vscode:exit 0' ? 0 : 1);
 		}
 	});
+	page.on('pageerror', async (error: Error) => {
+		console.error(`Error: ${error}`);
+	});
+	page.on('dialog', async (dialog: playwright.Dialog) => {
+		console.log(`Dialog: ${dialog.message}`);
+	});
+
 }
 
 function pkill(pid: number): Promise<void> {
